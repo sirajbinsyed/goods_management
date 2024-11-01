@@ -1,0 +1,60 @@
+{% extends "./admin/base.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+        <a href="{{ url_for('admintosell') }}" class="btn btn-info mb-3">
+          Go to Purchase Page
+        </a>
+      </div>
+  <!-- Purchase Details Section -->
+  <div class="col-lg-12 col-md-12 mb-md-0 mb-4" style="margin-top: 5px;">
+    <div class="card">
+      <div class="card-header pb-0">
+        <div class="row">
+          <div class="col-lg-6 col-7">
+            <h6>Purchase Details</h6>
+          </div>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive">
+          <table class="table table-in-card">
+            <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Card Number</th>
+                  <th scope="col">Card Type</th>
+                  <th scope="col">Month</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Unit</th>
+                  <th scope="col">Amount</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% if purchase_details %}
+                  {% for detail in purchase_details %}
+                  <tr>
+                      <th scope="row">{{ detail.purchase_details_id }}</th>
+                      <td>{{ detail.adhar_no }}</td>
+                      <td>{{ detail.card_type }}</td>
+                      <td>{{ detail.month }}</td>
+                      <td>{{ detail.product_name }}</td>
+                      <td>{{ detail.unit }}</td>
+                      <td>{{ detail.amount }}</td>
+                  </tr>
+                  {% endfor %}
+              {% else %}
+              <tr>
+                  <td colspan="5">No purchase details available.</td>
+              </tr>
+              {% endif %}
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

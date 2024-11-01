@@ -1,0 +1,185 @@
+
+{% extends "./admin/base.html" %}
+{% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  /* Custom styles */
+  .card-icon {
+      font-size: 40px;
+      color: #4e73df;
+  }
+  .card-title {
+      font-size: 18px;
+      font-weight: bold;
+  }
+  .navbar-custom {
+      background-color: #515768; /* Customize the header background color */
+      border-radius: 10px;
+  }
+  .navbar-custom .navbar-brand {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+     
+  }
+</style>
+<!-- Header Section -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Ration Info -admin panel- </a><a href="/logout" style="color: white;">Logout</a>
+  </div>
+</nav>
+<br>
+<br>
+<div class="container mt-4">
+  <div class="row text-center">
+      <!-- Sell Product -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-to-sell'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-cart"></i>
+                  <h5 class="card-title mt-3">Sell Product</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Category -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-category'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-tags"></i>
+                  <h5 class="card-title mt-3">Manage Category</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Card Type -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-cardtype'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-credit-card"></i>
+                  <h5 class="card-title mt-3">Manage Card Type</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Pricing -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-product-list'" >
+              <div class="card-body">
+                  <i class="card-icon bi bi-cash"></i>
+                  <h5 class="card-title mt-3">Manage Pricing</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Products -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-product'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-box"></i>
+                  <h5 class="card-title mt-3">Manage Products</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Card -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-card'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-card-list"></i>
+                  <h5 class="card-title mt-3">Manage Card</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Manage Stocks -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-stock'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-graph-up"></i>
+                  <h5 class="card-title mt-3">Manage Stocks</h5>
+              </div>
+          </div>
+      </div>
+
+      <!-- Purchase List -->
+      <div class="col-md-3 mb-4">
+          <div class="card shadow" onclick="window.location.href='/admin-purchase-list'">
+              <div class="card-body">
+                  <i class="card-icon bi bi-list-check"></i>
+                  <h5 class="card-title mt-3">Purchase List</h5>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Domain Search Start -->
+<div class="container-xxl domain mb-5" style="margin-top: 90px;">
+  <div class="container px-lg-5">
+      <div class="row justify-content-center">
+          <div class="col-lg-10">
+              <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                  <h1 class="mb-3">Search Card</h1>
+                  <p class="mb-1">Find Purchase Details By Adhar</p>
+              </div>
+              <div class="position-relative w-100 my-3 wow fadeInUp" data-wow-delay="0.3s">
+                  <input  id="domainInput" class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter Card No">
+                  <button id="searchButton"  type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Search</button>
+              </div>
+              <script>
+                  document.getElementById('searchButton').addEventListener('click', function() {
+                     
+                      var domainValue = document.getElementById('domainInput').value;
+                      
+                     
+                      window.location.href = "{{ url_for('adminpurchaselist') }}?adhar_no=" + encodeURIComponent(domainValue);
+                  });
+              </script>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <!-- Domain Search End -->
+<!-- Product Info Table Start -->
+<div class="container-xxl py-5">
+  <div class="container px-lg-5">
+      <div class="section-title position-relative mb-4 pb-4">
+          <h4 class="mb-2">PRODUCT INFORMATION IN THIS MONTH</h4>
+      </div>
+      <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+              <thead class="thead-light">
+                  <tr>
+                      <th>Product Name</th>
+                      <th>Card Type</th>
+                      <th>Month</th>
+                      <th>Unit Price</th>
+                      <th>Max Unit</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for item in card_product_list %}
+                  <tr>
+                      <td>{{ item.product_name }}</td>
+                      <td>{{ item.card_type }}</td>
+                      <td>{{ item.month }}</td>
+                      <td>{{ item.unit_price }}</td>
+                      <td>{{ item.max_unit }}</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+<!-- Product Info Table End -->
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

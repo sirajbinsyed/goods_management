@@ -1,0 +1,144 @@
+{% extends "./admin/base.html" %}
+{% block content %}
+<div class="row mb-4">
+
+  <!-- Add / Edit Product Section -->
+  <div class="col-lg-12 col-md-12">
+    <div class="card h-100">
+      <div class="card-header pb-0">
+        <h6>{{ 'Edit' if purchase_data else 'Add' }} Product</h6>
+      </div>
+
+      <div class="card-body p-3">
+        {% if purchase_data %}
+        <form method="post" action="{{ url_for('adminsellproduct') }}">
+          <input type="hidden" name="stock_id" value="{{ purchase_data.stock_id }}">
+          <input type="hidden" name="product_id" value="{{ purchase_data.product_id }}">
+          <input type="hidden" name="card_details_id" value="{{ purchase_data.card_details_id }}">
+          <input type="hidden" name="month" value="{{ purchase_data.month }}">
+          <input type="hidden" name="card_type_id" value="{{ purchase_data.card_type_id }}">
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="product_name">Product Name</label>
+            <input type="text" class="form-control" id="product_name" name="product_name"
+                   value="{{ purchase_data.product_name }}" readonly>
+          </div>
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="adhar_no">Card No</label>
+            <input type="text" class="form-control" id="adhar_no" name="adhar_no"
+                   value="{{ purchase_data.adhar_no }}" readonly>
+          </div>
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="current_stock">Current Stock</label>
+            <input type="text" class="form-control" id="current_stock" name="current_stock"
+                   value="{{ purchase_data.current_stock }}" readonly>
+          </div>
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="arrived_stock">Arrived Stock</label>
+            <input type="text" class="form-control" id="arrived_stock" name="arrived_stock"
+                   value="{{ purchase_data.arrived_stock }}" readonly>
+          </div>
+
+          <!-- Product List Info -->
+          {% if product_list_info %}
+          <div class="form-group input-group-outline mt-3">
+            <label for="unit_price">Unit Price</label>
+            <input type="text" class="form-control" id="unit_price" name="unit_price"
+                   value="{{ product_list_info[0].unit_price }}" readonly>
+          </div>
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="max_unit">Max Unit</label>
+            <input type="text" class="form-control" id="max_unit" name="max_unit"
+                   value="{{ product_list_info[0].max_unit }}" readonly>
+          </div>
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="month">Month</label>
+            <input type="text" class="form-control" id="month" name="month"
+                   value="{{ product_list_info[0].month }}" readonly>
+          </div>
+         
+
+          <div class="form-group input-group-outline mt-3">
+            <label for="unit">Unit</label>
+            <input type="number" class="form-control" id="unit" name="unit" min="1" value="1" placeholder="Enter Quantity of Product Kg/Ltr" required>
+          </div>
+
+          <div  class="form-group input-group-outline mt-3">
+            <label style="color:rgb(10, 92, 10)" for="total_amount" >Total Amount</label>
+            <input style="color:white; background-color: rgb(14, 49, 31);" type="text" class="form-control" id="total_amount" name="total_amount" placeholder="Amount will be Generated"required>
+          </div>
+
+          <br>
+          <button type="submit" class="btn btn-primary">{{ 'Update' if purchase_data_to_edit else 'Sell' }}</button>
+        </form>
+        {% else %}
+        <h5 style="margin: 10px;color: brown;">Product not available for this card.</h5>
+        {% endif %}
+
+        {% else %}
+        <p>No product data available to display.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase Details Section -->
+  <div class="col-lg-12 col-md-12 mb-md-0 mb-4" style="margin-top: 5px;">
+    <div class="card">
+      <div class="card-header pb-0">
+        <div class="row">
+          <div class="col-lg-6 col-7">
+            <h6>Purchase Details</h6>
+          </div>
+        </div>
+      </div>
+      <div class="card-body px-0 pb-2">
+        <div class="table-responsive">
+          <table class="table table-in-card">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Card Type</th>
+                <th scope="col">Month</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if purchase_details %}
+              {% for detail in purchase_details %}
+              <tr>
+                <th scope="row">{{ detail.purchase_details_id }}</th>
+                <td>{{ detail.product_name }}</td>
+                <td>{{ detail.card_type }}</td>
+                <td>{{ detail.month }}</td>
+                <td>{{ detail.amount }}</td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <tr>
+                <td colspan="5">No purchase details available.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    // JavaScript to calculate total amount based on unit price and unit
+    document.getElementById('unit').addEventListener('input', function() {
+      const unitPrice = parseFloat(document.getElementById('unit_price').value) || 0;
+      const unit = parseFloat(this.value) || 0;
+      const totalAmount = unitPrice * unit;
+      document.getElementById('total_amount').value = totalAmount.toFixed(2); 
+    });
+  </script>
+{% endblock %}

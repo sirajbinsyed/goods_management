@@ -1,0 +1,276 @@
+
+
+{% extends "./guest/base.html" %}
+{% block content %}
+<div class="container-xxl py-5 bg-primary hero-header mb-5">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5">
+            <div class="col-lg-6 pt-5 text-center text-lg-start">
+                <h1 class="display-4 text-white mb-4 animated slideInLeft">Digital agency for goods supply</h1>
+                <p class="text-white animated slideInLeft">An easy platform for to find your homely needs at home.</p>
+                <h1 class="text-white mb-4 animated slideInLeft">
+                
+            </div>
+            <div class="col-lg-6 text-center text-lg-start">
+                <img class="img-fluid animated zoomIn" src="../../static/guest/img/img1.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Navbar & Hero End -->
+
+
+<!-- Full Screen Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+<div class="modal-dialog modal-fullscreen">
+    <div class="modal-content" style="background: rgba(29, 40, 51, 0.8);">
+        <div class="modal-header border-0">
+            <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex align-items-center justify-content-center">
+            <div class="input-group" style="max-width: 600px;">
+                <input type="text" class="form-control bg-transparent border-light p-3" placeholder="Type search keyword">
+                <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Full Screen Search End -->
+
+
+<!-- Domain Search Start -->
+<div class="container-xxl domain mb-5" style="margin-top: 90px;">
+<div class="container px-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="mb-3">Search Your Card No</h1>
+                <p class="mb-1">find Your Purchase details</p>
+            </div>
+            <div class="position-relative w-100 my-3 wow fadeInUp" data-wow-delay="0.3s">
+                <input  id="domainInput" class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter Your Card No">
+                <button id="searchButton"  type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Search</button>
+            </div>
+            <script>
+                document.getElementById('searchButton').addEventListener('click', function() {
+                   
+                    var domainValue = document.getElementById('domainInput').value;
+                    
+                   
+                    window.location.href = "{{ url_for('purchaselist') }}?adhar_no=" + encodeURIComponent(domainValue);
+                });
+            </script>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Domain Search End -->
+
+
+
+
+
+
+<!-- Product Info Table Start -->
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="section-title position-relative mb-4 pb-4">
+            <h1 class="mb-2">Product Available On This Month</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Card Type</th>
+                        <th>Month</th>
+                        <th>Unit Price</th>
+                        <th>Max Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in card_product_list %}
+                    <tr>
+                        <td>{{ item.product_name }}</td>
+                        <td>{{ item.card_type }}</td>
+                        <td>{{ item.month }}</td>
+                        <td>{{ item.unit_price }}</td>
+                        <td>{{ item.max_unit }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Product Info Table End -->
+
+
+<!-- About Start -->
+<!-- <div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="section-title position-relative mb-4 pb-4">
+                    <h1 class="mb-2">Welcome to GreenHost</h1>
+                </div>
+                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit clita duo justo magna dolore erat amet</p>
+                <div class="row g-3">
+                    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
+                        <div class="bg-light rounded text-center p-4">
+                            <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
+                            <h2 class="mb-1" data-toggle="counter-up">1234</h2>
+                            <p class="mb-0">Experts</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.3s">
+                        <div class="bg-light rounded text-center p-4">
+                            <i class="fa fa-users fa-2x text-primary mb-2"></i>
+                            <h2 class="mb-1" data-toggle="counter-up">1234</h2>
+                            <p class="mb-0">Clients</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 wow fadeIn" data-wow-delay="0.5s">
+                        <div class="bg-light rounded text-center p-4">
+                            <i class="fa fa-check fa-2x text-primary mb-2"></i>
+                            <h2 class="mb-1" data-toggle="counter-up">1234</h2>
+                            <p class="mb-0">Projects</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <img class="img-fluid wow zoomIn" data-wow-delay="0.5s" src="../../static/guest/img/about.png">
+            </div>
+        </div>
+    </div>
+    </div> -->
+    <!-- About End -->
+
+
+<!-- Comparison Start -->
+<!-- <div class="container-xxl py-5">
+<div class="container px-lg-5">
+    <div class="section-title position-relative text-center mx-auto mb-5 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+        <h1 class="mb-3">Shared VS Dedicated Server</h1>
+        <p class="mb-1">Vero justo sed sed vero clita amet. Et justo vero sea diam elitr amet ipsum eos
+            ipsum clita duo sed. Sed vero sea diam erat vero elitr sit clita.</p>
+    </div>
+    <div class="row g-5 comparison position-relative">
+        <div class="col-lg-6 pe-lg-5">
+            <div class="section-title position-relative mx-auto mb-4 pb-4">
+                <h3 class="fw-bold mb-0">Shared Server</h3>
+            </div>
+            <div class="row gy-3 gx-5">
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
+                    <i class="fa fa-server fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">99.99% Uptime</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                    <i class="fa fa-shield-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">100% Secured</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                    <i class="fa fa-cog fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Control Panel</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
+                    <i class="fa fa-headset fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">24/7 Support</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 ps-lg-5">
+            <div class="section-title position-relative mx-auto mb-4 pb-4">
+                <h3 class="fw-bold mb-0">Dedicated Server</h3>
+            </div>
+            <div class="row gy-3 gx-5">
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
+                    <i class="fa fa-server fa-3x text-secondary mb-3"></i>
+                    <h5 class="fw-bold">99.99% Uptime</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
+                    <i class="fa fa-shield-alt fa-3x text-secondary mb-3"></i>
+                    <h5 class="fw-bold">100% Secured</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                    <i class="fa fa-cog fa-3x text-secondary mb-3"></i>
+                    <h5 class="fw-bold">Control Panel</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+                <div class="col-sm-6 wow fadeIn" data-wow-delay="0.7s">
+                    <i class="fa fa-headset fa-3x text-secondary mb-3"></i>
+                    <h5 class="fw-bold">24/7 Support</h5>
+                    <p>Ipsum dolor diam stet stet kasd diam sea stet sed rebum dolor ipsum</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
+<!-- Comparison Start -->
+
+<!-- Ration Shop Information Start -->
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <!-- Section Title -->
+        <div class="section-title position-relative text-center mx-auto mb-5 pb-4" style="max-width: 600px;">
+            <h1 class="mb-3">Contact Us</h1>
+            <p></p>
+        </div>
+
+        <!-- Ration Shop Description -->
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <h3 class="fw-bold mb-3">About Us</h3>
+                <p>
+                    Our ration shop is committed to providing essential items like rice, wheat, sugar, and other daily
+                    necessities to families in need. We ensure that all items are available at government-regulated prices, helping
+                    the community access affordable food and supplies.
+                </p>
+                <p>
+                    With a focus on transparency and quality, we aim to support local households by offering a fair distribution
+                    system that meets the needs of the underprivileged.
+                </p>
+            </div>
+
+            <!-- Shop Timings and Information -->
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <h3 class="fw-bold mb-3">Shop Timings</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fa fa-clock text-primary me-2"></i>Monday to Friday: 9:00 AM - 6:00 PM</li>
+                    <li><i class="fa fa-clock text-primary me-2"></i>Saturday: 9:00 AM - 4:00 PM</li>
+                    <li><i class="fa fa-clock text-primary me-2"></i>Sunday: Closed</li>
+                </ul>
+
+                <h3 class="fw-bold mt-4 mb-3">Contact Information</h3>
+                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123, Ration Shop Lane, City Name</p>
+                <p><i class="fa fa-phone-alt text-primary me-2"></i>+91 9876543210</p>
+                <p><i class="fa fa-envelope text-primary me-2"></i>support@rationshop.com</p>
+            </div>
+        </div>
+
+        <!-- Notice Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    <strong>Note:</strong> Please ensure to bring your ration card for all purchases. Only registered households are eligible for ration distribution.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ration Shop Information End -->
+
+
+
+{% endblock %}

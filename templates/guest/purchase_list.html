@@ -1,0 +1,65 @@
+{% extends "./guest/base.html" %}
+{% block content %}
+
+<!-- Navbar & Hero -->
+<div class="container-xxl py-5 bg-primary hero-header mb-5">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5 pt-5">
+            <div class="col-12 text-center text-lg-start">
+                <h1 class="display-4 text-white animated slideInLeft">Purchase Information</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center justify-content-lg-start animated slideInLeft">
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Purchase Info</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navbar & Hero End -->
+
+<!-- Purchase Info Table Start -->
+<div class="container-xxl py-5">
+    <div class="container px-lg-5">
+        <div class="section-title position-relative mb-4 pb-4">
+            <h1 class="mb-2">Purchase Details</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-in-card">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        
+                        <th scope="col">Month</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if purchase_details %}
+                        {% for detail in purchase_details %}
+                        <tr>
+                            <th scope="row">{{ detail.purchase_details_id }}</th>
+                            
+                            <td>{{ detail.month }}</td>
+                            <td>{{ detail.product_name }}</td>
+                            <td>{{ detail.unit }}</td>
+                            <td>{{ detail.amount }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">No purchase details available.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Purchase Info Table End -->
+
+{% endblock %}

@@ -1,0 +1,44 @@
+
+
+{% extends "./guest/base.html" %}
+{% block content %}
+<div class="container-xxl py-5 bg-primary hero-header mb-5">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5">
+            <div class="col-lg-6 pt-5 text-center text-lg-start">
+                <h1 class="display-4 text-white mb-4 animated slideInLeft">LOGIN </h1>
+                <p class="text-white animated slideInLeft">Digital agency for goods supply</p>
+                <h1 class="text-white mb-4 animated slideInLeft">
+                
+            </div>
+            <div class="col-lg-6 text-center text-lg-start">
+                <form action="/login" method="post">
+                    <div class="bg-light rounded" style="padding: 30px;">
+                        <h3>Login</h3>
+                        <input type="text" class="form-control border-0 py-2 mb-2" name="username" placeholder="username">
+                        <input type="password" class="form-control border-0 py-2 mb-2" name="password" placeholder="password">
+                        <button class="btn btn-danger w-100 py-2">LOGIN</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Navbar & Hero End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

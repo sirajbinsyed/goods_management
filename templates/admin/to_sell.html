@@ -1,0 +1,187 @@
+{% extends "./admin/base.html" %}
+{% block content %}
+<div class="row mb-4">
+<!-- Search Section for Month -->
+<div class="col-lg-12 col-md-12" >
+    <div class="card">
+      <div class="card-header pb-0">
+        <h6>Search Stocks by Month</h6>
+      </div>
+
+      <div class="card-body">
+        <!-- Search Form -->
+        <form method="GET" action="{{ url_for('admintosell') }}">
+          <div class="form-group">
+            <label for="month">Select Month</label>
+            <!-- Date Picker for selecting the month -->
+            <input type="month" id="month" name="month" class="form-control" 
+                   value="{{ request.args.get('month') }}" required>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-info">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase Section -->
+  <div class="col-lg-12 col-md-12" style="margin-top: 5px;">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h6>Stock Details</h6>
+      </div>
+         
+      <div class="card-body p-3">
+        <!-- If there's data from the selected month, show it, otherwise show current stocks -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            {% if stocks_from_month == 'no data' %}
+              <h6 style="color: brown;">No Product Available on  this Month</h6>
+              {% else %} 
+               {%if stocks_from_month %}
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Product Name</th>
+                <th>Arrived Stock</th>
+                <th>Current Stock</th>
+                <th>Card Number</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              
+                <!-- Loop through the stocks_from_month data -->
+                {% for stock in stocks_from_month %}
+                <tr>
+                  <form method="POST" action="{{ url_for('adminsellproduct') }}">
+                    
+                      <input type="hidden" name="stock_id" value="{{ stock.stock_id }}">
+                      <input type="hidden" name="product_id" value="{{ stock.product_id }}">
+                    <td>
+                      <input type="hidden" name="month" value="{{ stock.month.strftime('%Y-%m') }}">
+                      {{ stock.month.strftime('%Y-%m') }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="product_name" value="{{ stock.product_name }}">
+                      {{ stock.product_name }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="arrived_stock" value="{{ stock.arrived_stock }}">
+                      {{ stock.arrived_stock }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="current_stock" value="{{ stock.current_stock }}">
+                      {{ stock.current_stock }}
+                    </td>
+                    <td>
+                      <input type="text" name="adhar_no" class="form-control aadhaar-input" list="aadhaarList" placeholder="Enter Aadhaar No"  minlength="12" maxlength="12" required oninput="updateCardDetails(this)">
+                      <input type="hidden" name="card_details_id" class="card-details-id">
+                      <input type="hidden" name="card_type_id" class="card-type-id">
+                      <datalist id="aadhaarList">
+                        {% for data in adhar_data %}
+                          <option value="{{ data.adhar_no }}" data-card-id="{{ data.card_details_id }}" data-card-type-id="{{ data.card_type_id }}">
+                        {% endfor %}
+                      </datalist>
+                    </td>
+                    <td>
+                      <input type="hidden" name="unit"  value="1">
+                      <input type="hidden" name="total_amount" value="1">
+                      <button type="submit" class="btn btn-secondary btn-sm">Select</button>
+                    </td>
+                  </form>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <!-- If no stocks_from_month, display data from stocks -->
+                {% for stock in stocks %}
+                <tr>
+                  <form method="POST" action="{{ url_for('adminsellproduct') }}">
+                  
+                      <input type="hidden" name="stock_id" value="{{ stock.stock_id }}">
+                      <input type="hidden" name="product_id" value="{{ stock.product_id }}">
+                      
+                    <td>
+                      <input type="hidden" name="month" value="{{ stock.month.strftime('%Y-%m') }}">
+                      {{ stock.month.strftime('%Y-%m') }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="product_name" value="{{ stock.product_name }}">
+                      {{ stock.product_name }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="arrived_stock" value="{{ stock.arrived_stock }}">
+                      {{ stock.arrived_stock }}
+                    </td>
+                    <td>
+                      <input type="hidden" name="current_stock" value="{{ stock.current_stock }}">
+                      {{ stock.current_stock }}
+                    </td>
+                    <td>
+                      <input type="text" name="adhar_no" class="form-control aadhaar-input" list="aadhaarList" placeholder="Enter Aadhaar No" minlength="12" maxlength="12" required oninput="updateCardDetails(this)">
+                      <input type="hidden" name="card_details_id" class="card-details-id">
+                      <input type="hidden" name="card_type_id" class="card-type-id">
+                      <datalist id="aadhaarList">
+                        {% for data in adhar_data %}
+                          <option value="{{ data.adhar_no }}" data-card-id="{{ data.card_details_id }}" data-card-type-id="{{ data.card_type_id }}">
+                        {% endfor %}
+                      </datalist>
+                    </td>
+                    
+                    <td>
+                      <input type="hidden" name="unit"  value="1">
+                      <input type="hidden" name="total_amount" value="1">
+                      <button type="submit" class="btn btn-secondary btn-sm">Select</button>
+                    </td>
+                  </form>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.querySelector('.aadhaar-input').addEventListener('input', function () {
+    const selectedOption = document.querySelector(`#aadhaarList option[value="${this.value}"]`);
+
+    if (selectedOption) {
+      const cardDetailsId = selectedOption.getAttribute('data-card-id');
+      const cardTypeId = selectedOption.getAttribute('data-card-type-id');
+
+      document.querySelector('.card-details-id').value = cardDetailsId;
+      document.querySelector('.card-type-id').value = cardTypeId;
+
+    } else {
+      document.querySelector('.card-details-id').value = '';
+      document.querySelector('.card-type-id').value = '';
+    }
+  });
+  function updateCardDetails(inputElement) {
+    // Get the selected Aadhaar number from the input
+    const selectedAadhaar = inputElement.value;
+
+    // Get the corresponding datalist and find the matching option
+    const dataList = document.getElementById('aadhaarList');
+    const options = dataList.options;
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === selectedAadhaar) {
+            // Update the hidden fields with the selected option's data attributes
+            const row = inputElement.closest('tr');
+            row.querySelector('.card-details-id').value = options[i].getAttribute('data-card-id');
+            row.querySelector('.card-type-id').value = options[i].getAttribute('data-card-type-id');
+            break;
+        }
+    }
+}
+
+
+</script>
+{% endblock %}

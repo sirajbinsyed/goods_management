@@ -1,0 +1,76 @@
+
+
+{% extends "./guest/base.html" %}
+{% block content %}
+<div class="container-xxl py-5 bg-primary hero-header mb-5">
+    <div class="container my-5 py-5 px-lg-5">
+        <div class="row g-5 pt-5">
+            <div class="col-12 text-center text-lg-start">
+                <h1 class="display-4 text-white animated slideInLeft">Domain Registration</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center justify-content-lg-start animated slideInLeft">
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Domain</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Navbar & Hero End -->
+
+
+<!-- Full Screen Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(29, 40, 51, 0.8);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                    <input type="text" class="form-control bg-transparent border-light p-3" placeholder="Type search keyword">
+                    <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Full Screen Search End -->
+    
+    
+    <!-- Domain Search Start -->
+    <div class="container-xxl domain mb-5" style="margin-top: 90px;">
+    <div class="container px-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="section-title position-relative text-center mx-auto mb-4 pb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <h1 class="mb-3">Search Your Adhar</h1>
+                    <p class="mb-1">find Your Purchase details</p>
+                </div>
+                <div class="position-relative w-100 my-3 wow fadeInUp" data-wow-delay="0.3s">
+                    <input  id="domainInput" class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter Your Adhar No">
+                    <button id="searchButton"  type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Search</button>
+                </div>
+                <script>
+                    document.getElementById('searchButton').addEventListener('click', function() {
+                       
+                        var domainValue = document.getElementById('domainInput').value;
+                        
+                       
+                        window.location.href = "{{ url_for('purchaselist') }}?adhar_no=" + encodeURIComponent(domainValue);
+                    });
+                </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Domain Search End -->
+    
+
+
+
+{% endblock %}
